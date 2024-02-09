@@ -1,5 +1,14 @@
 <?php
-echo '
+$bagalnti = mysqli_connect("localhost","root","","example");
+if (!$bagalnti){
+    die("Connection Failed".mysqli_connect_error());
+}
+else{
+//echo "BAĞLANTI GERÇEKLEŞTİ";
+}
+
+?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -37,12 +46,36 @@ echo '
                     <div class="card">
                         <div class="card-body text-center d-flex flex-column align-items-center">
                             <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"><img data-bss-hover-animate="bounce" src="assets/img/farm.png" width="58" height="58"></div>
+
                             <form method="post">
-                                <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
-                                <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                                <div class="mb-3"><input class="form-control" type="text" name="reg_username" placeholder="Username"></div>
+                                <div class="mb-3"><input class="form-control" type="password" name="reg_password" placeholder="Password"></div>
+                                <div class="mb-3"><input class="form-control" type="password" name="reg_name" placeholder="Full Name"></div>
                                 <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Sign up</button></div>
                                 <p class="text-muted">Already have an account?&nbsp;<a href="login.php">Log in</a></p>
                             </form>
+                            <?php
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                // Veritabanı bağlantı değişkeninizin doğru tanımlandığından emin olun
+                                // Örneğin: $bagalnti = mysqli_connect('hostname', 'username', 'password', 'database');
+
+                                $regusername = isset($_POST['reg_username']) ? mysqli_real_escape_string($bagalnti, $_POST['reg_username']) : '';
+                                $regpassword = isset($_POST['reg_password']) ? mysqli_real_escape_string($bagalnti, $_POST['reg_password']) : '';
+                                $regname = isset($_POST['reg_name']) ? mysqli_real_escape_string($bagalnti, $_POST['reg_name']) : '';
+
+                                if ($regusername && $regpassword && $regname) {
+                                    $sql = "INSERT INTO tbl_user_login (username, password, name_surname) VALUES ('$regusername','$regpassword','$regname')";
+                                    $sonuc = mysqli_query($bagalnti, $sql);
+
+                                    if ($sonuc) {
+                                        echo "<script type='text/javascript'>alert('Kayıt Başarılı!');</script>";
+                                    } else {
+                                        echo "<script type='text/javascript'>alert('Kayıt Başarısız!');</script>";
+                                    }
+                                }
+                            }
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -74,5 +107,3 @@ echo '
 </body>
 
 </html>
-';
-?>

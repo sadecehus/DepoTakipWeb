@@ -69,7 +69,7 @@ echo '<div>';
     <form class="p-3 p-xl-4" method="post">
         <div class="mb-3"><input class="form-control" type="text" id="name-1" name="nameinput" placeholder="Name"></div>
         <div class="mb-3"><input class="form-control" type="email" id="email-1" name="emailinput" placeholder="Email"></div>
-        <div class="mb-3"><textarea class="form-control" id="message-1" name="messagebox" rows="6" placeholder="Messaaaage"></textarea></div>
+        <div class="mb-3"><textarea class="form-control" id="message-1" name="messagebox" rows="6" placeholder="Messaage"></textarea></div>
         <div><input class="btn btn-primary shadow d-block w-100" type="submit" NAME="send"> </input></div>
     </form>
 
