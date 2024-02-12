@@ -50,14 +50,12 @@ else{
                             <form method="post">
                                 <div class="mb-3"><input class="form-control" type="text" name="reg_username" placeholder="Username"></div>
                                 <div class="mb-3"><input class="form-control" type="password" name="reg_password" placeholder="Password"></div>
-                                <div class="mb-3"><input class="form-control" type="password" name="reg_name" placeholder="Full Name"></div>
+                                <div class="mb-3"><input class="form-control" type="text" name="reg_name" placeholder="Full Name"></div>
                                 <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Sign up</button></div>
                                 <p class="text-muted">Already have an account?&nbsp;<a href="login.php">Log in</a></p>
                             </form>
                             <?php
                             if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                // Veritabanı bağlantı değişkeninizin doğru tanımlandığından emin olun
-                                // Örneğin: $bagalnti = mysqli_connect('hostname', 'username', 'password', 'database');
 
                                 $regusername = isset($_POST['reg_username']) ? mysqli_real_escape_string($bagalnti, $_POST['reg_username']) : '';
                                 $regpassword = isset($_POST['reg_password']) ? mysqli_real_escape_string($bagalnti, $_POST['reg_password']) : '';

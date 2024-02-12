@@ -1,5 +1,17 @@
 <?php
-echo '
+class login{
+
+}
+
+$bagalnti = mysqli_connect("localhost","root","","example");
+if (!$bagalnti){
+    die("Connection Failed".mysqli_connect_error());
+}
+else{
+//echo "BAĞLANTI GERÇEKLEŞTİ";
+}
+?>
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -38,11 +50,44 @@ echo '
                         <div class="card-body text-center d-flex flex-column align-items-center">
                             <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4"><img data-bss-hover-animate="bounce" src="assets/img/farm.png" width="58" height="58"></div>
                             <form method="post">
-                                <div class="mb-3"><input class="form-control" type="email" name="email" placeholder="Email"></div>
-                                <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                                <div class="mb-3"><input class="form-control" type="text" name="log_username" placeholder="username"></div>
+                                <div class="mb-3"><input class="form-control" type="password" name="log_password" placeholder="Password"></div>
                                 <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Log in</button></div>
-                                <p class="text-muted">Don\'t you have an account?&nbsp;<a href="signup.php" data-bs-target="signup.php">SignUp</a></p>
+                                <p class="text-muted">Don't you have an account?&nbsp;<a href="signup.php" data-bs-target="signup.php">SignUp</a></p>
                             </form>
+                            <?php
+
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                $logusername = isset($_POST['log_username']) ? mysqli_real_escape_string($bagalnti, $_POST['log_username']) : '';
+                                $logpassword = isset($_POST['log_password']) ? mysqli_real_escape_string($bagalnti, $_POST['log_password']) : '';
+
+                                if ($logusername && $logpassword) {
+
+                                    $sql = "SELECT name_surname FROM tbl_user_login WHERE username=? AND password=?";
+                                    $stmt = $bagalnti->prepare($sql);
+
+                                    if ($stmt) {
+                                        $stmt->bind_param("ss", $logusername, $logpassword);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+
+                                        session_start(); // Oturumu başlat
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc();
+                                            $_SESSION['nameSurname'] = $row['name_surname'];
+
+                                            header("Location: denemesession.php"); // Burada 'next_page.php' yerine yönlendirilecek sayfanın adını girin
+                                            exit();
+                                        } else {
+                                            echo "<script type='text/javascript'>alert('Kullanıcı adı veya şifre hatalı!');</script>";
+                                        }
+                                    } else {
+                                        echo "<script type='text/javascript'>alert('Sorgu hatası!');</script>";
+                                    }
+                                }
+                            }
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -74,5 +119,5 @@ echo '
 </body>
 
 </html>
-';
-?>
+
+
