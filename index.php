@@ -1,10 +1,9 @@
 <?php
 
 
-
-$bagalnti = mysqli_connect("localhost","root","","example");
-if (!$bagalnti){
-die("Connection Failed".mysqli_connect_error());
+$bagalnti = mysqli_connect("localhost", "root", "", "example");
+if (!$bagalnti) {
+    die("Connection Failed".mysqli_connect_error());
 }
 else{
 //echo "BAĞLANTI GERÇEKLEŞTİ";
